@@ -26,14 +26,12 @@ import { convertFileSrc } from "@tauri-apps/api/tauri";
 interface Props {
   id: string;
   itemData: IVergeTestItem;
-  onEdit: () => void;
-  onDelete: (uid: string) => void;
 }
 
 let eventListener: UnlistenFn | null = null;
 
 export const TestItem = (props: Props) => {
-  const { itemData, onEdit, onDelete: onDeleteItem } = props;
+  const { itemData } = props;
   const {
     attributes,
     listeners,
@@ -72,7 +70,7 @@ export const TestItem = (props: Props) => {
     setDelay(result);
   };
 
-  const onCopy =  async (link) => {
+  const onCopy =  async (link: string) => {
     try {
       await navigator.clipboard.writeText(link);
       Notice.success(t("Copy Success"), 1000);
@@ -84,13 +82,13 @@ export const TestItem = (props: Props) => {
 
   const onEditTest = () => {
     setAnchorEl(null);
-    onEdit();
+    // onEdit();
   };
 
   const onDelete = useLockFn(async () => {
     setAnchorEl(null);
     try {
-      onDeleteItem(uid);
+      // onDeleteItem(uid);
     } catch (err: any) {
       Notice.error(err?.message || err.toString());
     }

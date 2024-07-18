@@ -128,7 +128,9 @@ const Layout = () => {
           await patchProfiles({ current });
           setTimeout(() => activateSelected(), 10);
         }
-        localStorage.setItem(KEY_CURRENT, remoteItem.uid);
+        if (remoteItem != null) {
+          localStorage.setItem(KEY_CURRENT, remoteItem.uid);
+        }
       });
     } else {
       console.log("current is: " + current);

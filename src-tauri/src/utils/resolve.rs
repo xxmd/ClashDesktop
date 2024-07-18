@@ -127,7 +127,7 @@ pub fn create_window(app_handle: &AppHandle) {
         "main".to_string(),
         tauri::WindowUrl::App("index.html".into()),
     )
-    .title("Clash Verge")
+    .title("佛跳墙VPN")
     .visible(false)
     .fullscreen(false)
     .min_inner_size(600.0, 520.0);

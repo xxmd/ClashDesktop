@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "package": {
-    "productName": "Clash Verge",
+    "productName": "佛跳墙VPN",
     "version": "1.7.5"
   },
   "build": {
@@ -26,8 +26,8 @@
       "externalBin": ["sidecar/verge-mihomo", "sidecar/verge-mihomo-alpha"],
       "copyright": "GNU General Public License v3.0",
       "category": "DeveloperTool",
-      "shortDescription": "A Clash Meta GUI based on tauri.",
-      "longDescription": "A Clash Meta GUI based on tauri."
+      "shortDescription": "佛跳墙VPN",
+      "longDescription": "佛跳墙VPN"
     },
     "updater": {
       "active": true,

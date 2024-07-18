@@ -196,7 +196,7 @@ interface IVergeTestItem {
   name?: string;
   icon?: string;
   url: string;
-  link: string;
+  link?: string;
 }
 interface IAddress {
   V4?: {
