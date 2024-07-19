@@ -9,3 +9,5 @@ scripts/_env.sh
 .vscode
 .tool-versions
 .idea
+.idea
+.github
