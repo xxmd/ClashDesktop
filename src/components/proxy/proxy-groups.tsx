@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useLockFn } from "ahooks";
 import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 import {
@@ -25,7 +25,6 @@ export const ProxyGroups = (props: Props) => {
   const { mode } = props;
 
   const { renderList, onProxies, onHeadState } = useRenderList(mode);
-
   const { verge } = useVerge();
   const { current, patchCurrent } = useProfiles();
   const timeout = verge?.default_latency_timeout || 10000;
@@ -120,6 +119,10 @@ export const ProxyGroups = (props: Props) => {
   if (mode === "direct") {
     return <BaseEmpty text={t("clash_mode_direct")} />;
   }
+
+  // useEffect(() => {
+  // }, [renderList])
+
 
   return (
     <Virtuoso

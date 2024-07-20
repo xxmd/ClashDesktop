@@ -25,16 +25,16 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
 export const routers = [
   {
-    label: "Label-Test",
-    path: "/",
-    icon: [<WifiTetheringRoundedIcon />, <TestSvg />],
-    element: <TestPage />
-  },
-  {
     label: "Label-Proxies",
-    path: "/proxy",
+    path: "/",
     icon: [<WifiRoundedIcon />, <ProxiesSvg />],
     element: <ProxiesPage />,
+  },
+  {
+    label: "Label-Test",
+    path: "/test",
+    icon: [<WifiTetheringRoundedIcon />, <TestSvg />],
+    element: <TestPage />
   },
   // {
   //   label: "Label-Proxies",

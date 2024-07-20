@@ -91,7 +91,12 @@ const Layout = () => {
       await appWindow.setFocus();
     }, 50);
 
-    autoImportConfig();
+    try{
+      autoImportConfig();
+    }catch (e) {
+      console.dir(e);
+    }
+
   }, []);
 
   useEffect(() => {
@@ -109,32 +114,37 @@ const Layout = () => {
     patchProfiles
   } = useProfiles();
   const DEFAULT_URL = "https://ftq.ink/group";
-  const KEY_CURRENT = "current";
+
   const autoImportConfig = async () => {
-    console.log("autoImportConfig");
-    const current = localStorage.getItem(KEY_CURRENT);
-    if (!current) {
-      console.log("auto enable_system_proxy");
-      patchVerge({ enable_system_proxy: true });
-      await importProfile(DEFAULT_URL);
+    await patchVerge({ enable_system_proxy: false })
+    const profiles = await getProfiles();
+    const remoteItem = profiles.items?.find((e) => e.type === "remote" && e.url === DEFAULT_URL);
+    if (!remoteItem) {
+      try {
+        await importProfile(DEFAULT_URL);
+      } catch (e) {
+        Notice.error(t("Profile Imported Error"), 1000 * 20);
+        return;
+      }
       Notice.success(t("Profile Imported Successfully"));
-
       getProfiles().then(async (newProfiles) => {
-        mutate("getProfiles", newProfiles);
-
-        const remoteItem = newProfiles.items?.find((e) => e.type === "remote");
-        if ((!newProfiles.current || newProfiles.current === "Merge") && remoteItem) {
-          const current = remoteItem.uid;
+        const firstRemote = newProfiles.items?.find((e) => e.type === "remote");
+        if ((!newProfiles.current || newProfiles.current === "Merge") && firstRemote) {
+          const current = firstRemote.uid;
           await patchProfiles({ current });
-          setTimeout(() => activateSelected(), 10);
-        }
-        if (remoteItem != null) {
-          localStorage.setItem(KEY_CURRENT, remoteItem.uid);
+          await activateSelected();
+          try {
+            await patchVerge({ enable_system_proxy: true });
+          } catch (e) {
+            Notice.error(t("open_system_proxy_error"), 1000 * 20);
+          }
+          Notice.success(t("open_system_proxy"));
         }
       });
     } else {
-      console.log("current is: " + current);
+      await patchVerge({ enable_system_proxy: true });
     }
+
   };
 
 

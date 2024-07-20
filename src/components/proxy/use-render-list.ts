@@ -73,7 +73,7 @@ export const useRenderList = (mode: string) => {
         { type: 0, key: group.name, group, headState },
       ];
 
-      if (headState?.open || !useRule) {
+      if (headState?.open || !useRule || true) {
         const proxies = filterSort(
           group.all,
           group.name,

@@ -4,12 +4,12 @@ import {
   ListItemText,
   ListItemButton,
   Typography,
-  styled,
+  styled, ListItem, IconButton
 } from "@mui/material";
 import {
   ExpandLessRounded,
   ExpandMoreRounded,
-  InboxRounded,
+  InboxRounded, NetworkCheckRounded
 } from "@mui/icons-material";
 import { HeadState } from "./use-head-state";
 import { ProxyHead } from "./proxy-head";
@@ -21,6 +21,8 @@ import { useThemeMode } from "@/services/states";
 import { useEffect, useMemo, useState } from "react";
 import { convertFileSrc } from "@tauri-apps/api/tauri";
 import { downloadIconCache } from "@/services/cmds";
+import CommentIcon from '@mui/icons-material/Comment';
+import { useTranslation } from "react-i18next";
 
 interface RenderProps {
   item: IRenderItem;
@@ -42,9 +44,16 @@ export const ProxyRender = (props: RenderProps) => {
   const itembackgroundcolor = isDark ? "#282A36" : "#ffffff";
   const [iconCachePath, setIconCachePath] = useState("");
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     initIconCachePath();
   }, [group]);
+
+  useEffect(() => {
+    console.log("onCheckAll: " + group.name)
+    onCheckAll(group.name);
+  }, [group.name]);
 
   async function initIconCachePath() {
     if (group.icon && group.icon.trim().startsWith("http")) {
@@ -61,82 +70,52 @@ export const ProxyRender = (props: RenderProps) => {
 
   if (type === 0 && !group.hidden) {
     return (
-      <ListItemButton
-        dense
-        style={{
-          background: itembackgroundcolor,
-          height: "100%",
-          margin: "8px 8px",
-          borderRadius: "8px",
-        }}
-        onClick={() => onHeadState(group.name, { open: !headState?.open })}
+
+      <ListItem
+        key={group.name}
+        secondaryAction={
+          <IconButton
+
+            onClick={() => onCheckAll(group.name)}
+                      title={t("Delay check")}>
+            <NetworkCheckRounded />
+          </IconButton>
+        }
+        disablePadding
       >
-        {enable_group_icon &&
-          group.icon &&
-          group.icon.trim().startsWith("http") && (
-            <img
-              src={iconCachePath === "" ? group.icon : iconCachePath}
-              width="32px"
-              style={{ marginRight: "12px", borderRadius: "6px" }}
-            />
-          )}
-        {enable_group_icon &&
-          group.icon &&
-          group.icon.trim().startsWith("data") && (
-            <img
-              src={group.icon}
-              width="32px"
-              style={{ marginRight: "12px", borderRadius: "6px" }}
-            />
-          )}
-        {enable_group_icon &&
-          group.icon &&
-          group.icon.trim().startsWith("<svg") && (
-            <img
-              src={`data:image/svg+xml;base64,${btoa(group.icon)}`}
-              width="32px"
-            />
-          )}
-        <ListItemText
-          primary={<StyledPrimary>{group.name}</StyledPrimary>}
-          secondary={
-            <ListItemTextChild
-              sx={{
-                overflow: "hidden",
-                display: "flex",
-                alignItems: "center",
-                pt: "2px",
-              }}
-            >
-              <Box sx={{ marginTop: "2px" }}>
-                <StyledTypeBox>{group.type}</StyledTypeBox>
-                <StyledSubtitle sx={{ color: "text.secondary" }}>
-                  {group.now}
-                </StyledSubtitle>
-              </Box>
-            </ListItemTextChild>
-          }
-          secondaryTypographyProps={{
-            sx: { display: "flex", alignItems: "center", color: "#ccc" },
+
+        <ListItemButton
+          dense
+          style={{
+            background: itembackgroundcolor,
+            height: "100%",
+            margin: "8px 16px",
+            borderRadius: "8px",
           }}
-        />
-        {headState?.open ? <ExpandLessRounded /> : <ExpandMoreRounded />}
-      </ListItemButton>
+          onClick={() => onCheckAll(group.name)}
+        >
+          <ListItemText
+            primary={<StyledPrimary>{group.name}</StyledPrimary>}
+          />
+          {/*{headState?.open ? <ExpandLessRounded /> : <ExpandMoreRounded />}*/}
+        </ListItemButton>
+      </ListItem>
     );
   }
 
-  if (type === 1 && !group.hidden) {
-    return (
-      <ProxyHead
-        sx={{ pl: 2, pr: 3, mt: indent ? 1 : 0.5, mb: 1 }}
-        groupName={group.name}
-        headState={headState!}
-        onLocation={() => onLocation(group)}
-        onCheckDelay={() => onCheckAll(group.name)}
-        onHeadState={(p) => onHeadState(group.name, p)}
-      />
-    );
-  }
+  // if (type === 1 && !group.hidden) {
+  //   return (
+  //     <ProxyHead
+  //       sx={{ pl: 2, pr: 3, mt: indent ? 1 : 0.5, mb: 1 }}
+  //       url={group.testUrl}
+  //       groupName={group.name}
+  //       headState={headState!}
+  //       onLocation={() => onLocation(group)}
+  //       onCheckDelay={() => onCheckAll(group.name)}
+  //       onHeadState={(p) => onHeadState(group.name, p)}
+  //     />
+  //   );
+  // }
 
   if (type === 2 && !group.hidden) {
     return (
