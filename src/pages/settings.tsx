@@ -34,35 +34,35 @@ const SettingPage = () => {
   return (
     <BasePage
       title={t("Settings")}
-      header={
-        <ButtonGroup variant="contained" aria-label="Basic button group">
-          <IconButton
-            size="medium"
-            color="inherit"
-            title={t("Manual")}
-            onClick={toGithubDoc}
-          >
-            <HelpOutlineRounded fontSize="inherit" />
-          </IconButton>
-          <IconButton
-            size="medium"
-            color="inherit"
-            title={t("TG Channel")}
-            onClick={toTelegramChannel}
-          >
-            <Telegram fontSize="inherit" />
-          </IconButton>
-
-          <IconButton
-            size="medium"
-            color="inherit"
-            title={t("Github Repo")}
-            onClick={toGithubRepo}
-          >
-            <GitHub fontSize="inherit" />
-          </IconButton>
-        </ButtonGroup>
-      }
+      // header={
+      //   <ButtonGroup variant="contained" aria-label="Basic button group">
+      //     <IconButton
+      //       size="medium"
+      //       color="inherit"
+      //       title={t("Manual")}
+      //       onClick={toGithubDoc}
+      //     >
+      //       <HelpOutlineRounded fontSize="inherit" />
+      //     </IconButton>
+      //     <IconButton
+      //       size="medium"
+      //       color="inherit"
+      //       title={t("TG Channel")}
+      //       onClick={toTelegramChannel}
+      //     >
+      //       <Telegram fontSize="inherit" />
+      //     </IconButton>
+      //
+      //     <IconButton
+      //       size="medium"
+      //       color="inherit"
+      //       title={t("Github Repo")}
+      //       onClick={toGithubRepo}
+      //     >
+      //       <GitHub fontSize="inherit" />
+      //     </IconButton>
+      //   </ButtonGroup>
+      // }
     >
       <Grid container spacing={{ xs: 1.5, lg: 1.5 }}>
         <Grid item xs={12} md={6}>
@@ -75,25 +75,25 @@ const SettingPage = () => {
           >
             <SettingSystem onError={onError} />
           </Box>
-          <Box
-            sx={{
-              borderRadius: 2,
-              backgroundColor: isDark ? "#282a36" : "#ffffff",
-            }}
-          >
-            <SettingClash onError={onError} />
-          </Box>
+          {/*<Box*/}
+          {/*  sx={{*/}
+          {/*    borderRadius: 2,*/}
+          {/*    backgroundColor: isDark ? "#282a36" : "#ffffff",*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  <SettingClash onError={onError} />*/}
+          {/*</Box>*/}
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Box
-            sx={{
-              borderRadius: 2,
-              backgroundColor: isDark ? "#282a36" : "#ffffff",
-            }}
-          >
-            <SettingVerge onError={onError} />
-          </Box>
-        </Grid>
+        {/*<Grid item xs={12} md={6}>*/}
+        {/*  /!*<Box*!/*/}
+        {/*  /!*  sx={{*!/*/}
+        {/*  /!*    borderRadius: 2,*!/*/}
+        {/*  /!*    backgroundColor: isDark ? "#282a36" : "#ffffff",*!/*/}
+        {/*  /!*  }}*!/*/}
+        {/*  /!*>*!/*/}
+        {/*  /!*  <SettingVerge onError={onError} />*!/*/}
+        {/*  /!*</Box>*!/*/}
+        {/*</Grid>*/}
       </Grid>
     </BasePage>
   );
